@@ -1,0 +1,38 @@
+# First, create a ConfigMap whose contents are used
+# as the nginx.conf file in the web server. 
+# This server uses /var/www/html as its
+# root document directory. When the server gets a 
+# request for *.php, it will forward that request
+# to our PHP-FPM container.
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-config
+  namespace: nginx-php-fpm≈
+data:
+  nginx.conf: |
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        
+        # Set nginx to serve files from the shared volume!
+        root /var/website;
+        charset utf-8;
+        index index.php index.html index.htm index.nginx-debian.html;
+        server_name _;
+       
+        access_log /var/log/access.log combined;                                                                                                                                                                                                   
+        error_log /var/log/error.log;  
+        location / {
+            index index.php;
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+        location ~ \.php$ {
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+      }
