@@ -32,6 +32,6 @@ spec:
           hostPath:
             path: /var/website
             type: Directory
-            owner:
-              uid: 0
-              gid: 0
+#            owner:
+#              uid: 0
+#              gid: 0
