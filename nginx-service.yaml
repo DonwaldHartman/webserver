@@ -8,11 +8,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-   - protocol: TCP
-     port: 80
-     name: http
-  externalIPs:
-    - 178.79.160.49
+    - port: 80
+      protocol: TCP
+      nodePort: 32124
+      name: http
     - port: 443
       nodePort: 30443
       name: https
