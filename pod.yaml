@@ -19,7 +19,7 @@ spec:
             - containerPort: 80
           volumeMounts:
             - name: web-data
-              mountPath: /var/www/html
+              mountPath: /var/website
             - mountPath: /etc/nginx/conf.d
               name: nginx-config
         - name: php-fpm
@@ -28,7 +28,7 @@ spec:
             - containerPort: 9000
           volumeMounts:
             - name: web-data
-              mountPath: /var/www/html
+              mountPath: /var/website
       volumes:
         - name: web-data
           hostPath:
