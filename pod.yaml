@@ -30,7 +30,7 @@ spec:
       volumes:
         - name: web-data
           hostPath:
-            path: /path/to/host/mount
+            path: /var/website
             type: Directory
             owner:
               uid: 0
