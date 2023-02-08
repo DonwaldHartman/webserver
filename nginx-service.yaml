@@ -4,10 +4,12 @@ metadata:
   name: nginx-php-fpm
   labels:
     name: nginx-php-fpm
+    layer: frontend
 spec:
   type: NodePort
   ports:
     - port: 80
+      protocol: TCP
       nodePort: 32124
       name: http
     - port: 443
