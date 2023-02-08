@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-php-fpm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-php-fpm
+  template:
+    metadata:
+      labels:
+        app: nginx-php-fpm
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: web-data
+              mountPath: /var/www/html
+        - name: php-fpm
+          image: php:7.3-fpm
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: web-data
+              mountPath: /var/www/html
+      volumes:
+        - name: web-data
+          hostPath:
+            path: /path/to/host/mount
+            type: Directory
+            owner:
+              uid: 0
+              gid: 0
